@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: bbbackend
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: MONGO_URI
+        value: mongodb+srv://mdsammlk00_db_user:MW9tb9TLLQ3SEEx0@cluster0.wlmsf6c.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+      - key: JWT_SECRET
+        value: Ep8zF.k<rb&b>3iUuqrquqrtyped>0#uu$qr*qu
+      - key: PORT
+        value: 10000
