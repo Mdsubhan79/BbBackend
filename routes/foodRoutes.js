@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Food = require("../models/Food");
+const Food = require("../models/FoodItem");
 
 // Add food
 router.post("/add", async (req, res) => {
