@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 
 const Admin = require("../models/Admin");
 const User = require("../models/User");
-const Food = require("../models/Food");
+const Food = require("../models/FoodItem");
 const Booking = require("../models/Booking");
 const Order = require("../models/Order");
 
@@ -37,7 +37,7 @@ router.get("/orders", async (req, res) => {
 });
 
 // GET TIFFIN BOOKINGS
-router.get("/bookings", async (req, res) => {
+router.get("/Bookings", async (req, res) => {
   const bookings = await Booking.find();
   res.json(bookings);
 });
