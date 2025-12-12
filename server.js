@@ -28,8 +28,8 @@ const orderRoutes = require("./routes/orderRoutes");
 const notificationRoutes = require("./routes/notificationRoutes");
 
 app.use("/api/auth", authRoutes);
-app.use("/api/admin", adminRoutes);
-app.use("/api/food", foodRoutes);
-app.use("/api/bookings", bookingRoutes);
-app.use("/api/orders", orderRoutes);
-app.use("/api/notify", notificationRoutes);
+app.use("/api/Admin", adminRoutes);
+app.use("/api/foodItem", foodRoutes);
+app.use("/api/Booking", bookingRoutes);
+app.use("/api/Orders", orderRoutes);
+app.use("/api/Notification", notificationRoutes);
