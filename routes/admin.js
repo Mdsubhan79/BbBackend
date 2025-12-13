@@ -128,6 +128,26 @@ router.put("/tiffins/:id", adminAuth, async (req, res) => {
     res.status(500).json({ message: "Update failed" });
   }
 });
+const Tiffin = require("../models/Tiffin");
+
+// UPDATE TIFFIN
+router.put("/tiffins/:id", adminAuth, async (req, res) => {
+  try {
+    const { type, price, meals, active } = req.body;
+
+    const updated = await Tiffin.findByIdAndUpdate(
+      req.params.id,
+      { type, price, meals, active },
+      { new: true }
+    );
+
+    res.json(updated);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Update failed" });
+  }
+});
+
 
 /* ================= USERS LIST ================= */
 router.get("/users", adminAuth, async (req, res) => {
