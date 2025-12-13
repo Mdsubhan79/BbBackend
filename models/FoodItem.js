@@ -1,11 +1,14 @@
 const mongoose = require("mongoose");
 
 const foodItemSchema = new mongoose.Schema({
-  name: String,
-  desc: String,
-  price: Number,
-  category: { type: String, enum: ["veg", "non-veg"] },
-  image: String
-});
+  name: { type: String, required: true },
+  name_hi: { type: String },
+  price: { type: Number, required: true },
+  type: { type: String, enum: ["veg", "nonveg"], required: true },
+  category: String,
+  description: String,
+  image: String,
+  available: { type: Boolean, default: true }
+}, { timestamps: true });
 
 module.exports = mongoose.model("FoodItem", foodItemSchema);

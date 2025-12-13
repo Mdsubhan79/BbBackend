@@ -43,3 +43,40 @@ router.get("/Bookings", async (req, res) => {
 });
 
 module.exports = router;
+// DASHBOARD OVERVIEW STATS
+router.get("/dashboard-stats", async (req, res) => {
+  try {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const totalUsers = await User.countDocuments();
+
+    const todayOrders = await Order.countDocuments({
+      createdAt: { $gte: today }
+    });
+
+    const vegItems = await Food.countDocuments({ type: "veg" });
+    const nonVegItems = await Food.countDocuments({ type: "nonveg" });
+
+    const activeTiffins = await Booking.countDocuments({
+      status: "active"
+    });
+
+    const revenue = await Order.aggregate([
+      { $match: { createdAt: { $gte: today } } },
+      { $group: { _id: null, total: { $sum: "$totalPrice" } } }
+    ]);
+
+    res.json({
+      totalUsers,
+      todayOrders,
+      vegItems,
+      nonVegItems,
+      activeTiffins,
+      todayRevenue: revenue[0]?.total || 0
+    });
+
+  } catch (err) {
+    res.status(500).json({ message: "Dashboard error" });
+  }
+});

@@ -6,30 +6,27 @@ require("dotenv").config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware
+/* ========= MIDDLEWARE ========= */
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE"]
+}));
 app.use(express.json());
-app.use(cors());
 
-// Import Routes
-const authRoutes = require("./routes/authRoutes");
-app.use("/api/auth", authRoutes);
+/* ========= ROUTES ========= */
+app.use("/api/auth", require("./routes/authRoutes"));
+app.use("/api/admin", require("./routes/admin"));       // ✅ admin dashboard
+app.use("/api/food", require("./routes/foodRoutes"));
+app.use("/api/bookings", require("./routes/bookingRoutes"));
+app.use("/api/orders", require("./routes/orderRoutes"));
+app.use("/api/notifications", require("./routes/notificationRoutes"));
 
-// Connect to MongoDB
+/* ========= DATABASE ========= */
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("✅ MongoDB Connected"))
   .catch(err => console.log("❌ DB Error:", err));
 
-// Start server
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
-const adminRoutes = require("./routes/adminRoutes");
-const foodRoutes = require("./routes/foodRoutes");
-const bookingRoutes = require("./routes/bookingRoutes");
-const orderRoutes = require("./routes/orderRoutes");
-const notificationRoutes = require("./routes/notificationRoutes");
-
-app.use("/api/auth", authRoutes);
-app.use("/api/Admin", adminRoutes);
-app.use("/api/foodItem", foodRoutes);
-app.use("/api/Booking", bookingRoutes);
-app.use("/api/Orders", orderRoutes);
-app.use("/api/Notification", notificationRoutes);
+/* ========= START SERVER ========= */
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+});
