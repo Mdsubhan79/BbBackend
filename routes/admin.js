@@ -6,6 +6,7 @@ const User = require("../models/User");
 const Food = require("../models/FoodItem");
 const Order = require("../models/Order");
 const Booking = require("../models/Booking");
+const Tiffin = require("../models/Tiffin"); 
 
 /* ================= DASHBOARD STATS ================= */
 router.get("/dashboard-stats", adminAuth, async (req, res) => {
