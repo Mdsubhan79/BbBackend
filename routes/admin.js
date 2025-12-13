@@ -74,7 +74,7 @@ router.delete("/menu/:id", adminAuth, async (req, res) => {
 module.exports = router;
 
 
-const Tiffin = require("../models/Tiffin");
+
 
 /* ================= GET TIFFINS ================= */
 router.get("/tiffins", adminAuth, async (req, res) => {
