@@ -8,7 +8,7 @@ const Order = require("../models/Order");
 const Booking = require("../models/Booking");
 const Tiffin = require("../models/Tiffin");
 const Admin = require("../models/Admin"); // <-- import Admin model
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 /* ================= DASHBOARD STATS ================= */
