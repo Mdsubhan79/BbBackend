@@ -8,16 +8,18 @@ module.exports = function (req, res, next) {
       return res.status(401).json({ message: "No token provided" });
     }
 
-const token = authHeader.split(" ")[1];
-const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const token = authHeader.split(" ")[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-if (decoded.role !== "admin") {
-  return res.status(403).json({ message: "Not an admin" });
-}
+    console.log("DECODED TOKEN:", decoded); // 👈 ADD THIS TEMP
 
-    req.admin = decoded; // optional
+    if (decoded.role !== "admin") {
+      return res.status(403).json({ message: "Not an admin" });
+    }
+
+    req.admin = decoded;
     next();
   } catch (err) {
-    res.status(401).json({ message: "Invalid token" });
+    return res.status(401).json({ message: "Invalid token" });
   }
 };
