@@ -20,6 +20,9 @@ app.use("/api/food", require("./routes/foodRoutes"));
 app.use("/api/bookings", require("./routes/bookingRoutes"));
 app.use("/api/orders", require("./routes/orderRoutes"));
 app.use("/api/notifications", require("./routes/notificationRoutes"));
+const adminOrderRoutes = require("./routes/adminOrderRoutes");
+
+app.use("/api/admin/orders", adminOrderRoutes);
 
 /* ========= DATABASE ========= */
 mongoose.connect(process.env.MONGO_URI)
