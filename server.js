@@ -23,6 +23,7 @@ app.use("/api/notifications", require("./routes/notificationRoutes"));
 const adminOrderRoutes = require("./routes/adminOrderRoutes");
 
 app.use("/api/admin/Orders", adminOrderRoutes);
+
 const adminMenuRoutes = require("./routes/adminMenuRoutes");
 
 app.use("/api/admin", adminMenuRoutes);
