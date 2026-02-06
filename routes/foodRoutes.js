@@ -2,23 +2,40 @@ const express = require("express");
 const router = express.Router();
 const Food = require("../models/FoodItem");
 
-// Add food
+// ADD FOOD
 router.post("/add", async (req, res) => {
-  const food = new Food(req.body);
-  await food.save();
-  res.json({ message: "Food added successfully" });
+  try {
+    const food = new Food(req.body);
+    await food.save();
+    res.json({ message: "Food added successfully" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
-// Get all food
+// GET FOOD (veg / nonveg / all)
 router.get("/", async (req, res) => {
-  const foods = await Food.find();
-  res.json(foods);
+  try {
+    const filter = {};
+    if (req.query.type) {
+      filter.type = req.query.type; // veg or nonveg
+    }
+
+    const foods = await Food.find(filter);
+    res.json(foods);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
-// Delete food
+// DELETE FOOD
 router.delete("/:id", async (req, res) => {
-  await Food.findByIdAndDelete(req.params.id);
-  res.json({ message: "Food deleted" });
+  try {
+    await Food.findByIdAndDelete(req.params.id);
+    res.json({ message: "Food deleted" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 module.exports = router;
