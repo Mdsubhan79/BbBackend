@@ -54,8 +54,8 @@ router.get("/dashboard-stats", async (req, res) => {
 
     const totalUsers = await User.countDocuments();
     const todayOrders = await Order.countDocuments({ createdAt: { $gte: today } });
-    const vegItems = await Food.countDocuments({ type: "veg" });
-    const nonVegItems = await Food.countDocuments({ type: "nonveg" });
+    const vegItems = await Food.countDocuments({ item_type: "veg" });
+    const nonVegItems = await Food.countDocuments({ item_type: "nonveg" });
     const activeTiffins = await Booking.countDocuments({ status: "active" });
 
     res.json({
