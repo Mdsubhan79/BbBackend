@@ -2,13 +2,32 @@ const express = require("express");
 const router = express.Router();
 const Food = require("../models/FoodItem");
 
-// ADD FOOD
 router.post("/add", async (req, res) => {
   try {
-    const food = new Food(req.body);
+    const { name, price, item_type, category, description, image } = req.body;
+
+    if (!name || !price || !item_type) {
+      return res.status(400).json({ error: "Required fields missing" });
+    }
+
+    const food = new Food({
+      name,
+      price,
+      item_type,
+      category,
+      description,
+      image
+    });
+
     await food.save();
-    res.json({ message: "Food added successfully" });
+
+    res.json({
+      success: true,
+      message: "Food added successfully",
+      food
+    });
   } catch (err) {
+    console.error("ADD FOOD ERROR:", err.message);
     res.status(500).json({ error: err.message });
   }
 });
