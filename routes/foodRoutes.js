@@ -18,7 +18,7 @@ router.get("/", async (req, res) => {
   try {
     const filter = {};
     if (req.query.type) {
-      filter.type = req.query.type; // veg or nonveg
+      filter.item_type = req.query.type; // veg or nonveg
     }
 
     const foods = await Food.find(filter);
