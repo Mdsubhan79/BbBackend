@@ -4,7 +4,7 @@ const foodItemSchema = new mongoose.Schema({
   name: { type: String, required: true },
   name_hi: { type: String },
   price: { type: Number, required: true },
-  type: { type: String, enum: ["veg", "nonveg"], required: true },
+  item_type: { type: String, enum: ["veg", "nonveg"], required: true },
   category: String,
   description: String,
   image: String,
