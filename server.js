@@ -31,10 +31,11 @@ app.use(cors({
   methods: ["GET", "POST", "PUT", "DELETE"]
 }));
 
+app.use(cors());
 app.use(express.json());
 
-/* ========= STATIC FILES (IMPORTANT) ========= */
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
 
 /* ========= ROUTES ========= */
 app.use("/api/auth", require("./routes/authRoutes"));
