@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const path = require("path");
 require("dotenv").config();
 
 const app = express();
@@ -11,23 +12,25 @@ app.use(cors({
   origin: "*",
   methods: ["GET", "POST", "PUT", "DELETE"]
 }));
+
 app.use(express.json());
+
+/* ========= STATIC FILES (IMPORTANT) ========= */
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 /* ========= ROUTES ========= */
 app.use("/api/auth", require("./routes/authRoutes"));
-app.use("/api/admin", require("./routes/admin"));       // ✅ admin dashboard
+app.use("/api/admin", require("./routes/admin"));       // admin dashboard
 app.use("/api/food", require("./routes/foodRoutes"));
 app.use("/api/bookings", require("./routes/bookingRoutes"));
 app.use("/api/orders", require("./routes/orderRoutes"));
 app.use("/api/notifications", require("./routes/notificationRoutes"));
-const adminOrderRoutes = require("./routes/adminOrderRoutes");
 
+const adminOrderRoutes = require("./routes/adminOrderRoutes");
 app.use("/api/admin/Orders", adminOrderRoutes);
 
 const adminMenuRoutes = require("./routes/adminMenuRoutes");
-
 app.use("/api/admin", adminMenuRoutes);
-
 
 /* ========= DATABASE ========= */
 mongoose.connect(process.env.MONGO_URI)
