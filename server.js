@@ -1,3 +1,21 @@
+
+function deleteNonVeg(id) {
+  if (!confirm("Delete this item?")) return;
+
+  fetch(`${API_BASE}/api/food/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("adminToken")
+    }
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (!data.success) throw new Error("Delete failed");
+      loadNonVegMenu();
+    })
+    .catch(() => alert("Failed to delete non-veg item"));
+}
+
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
