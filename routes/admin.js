@@ -15,8 +15,8 @@ const jwt = require("jsonwebtoken");
 router.get("/dashboard-stats", adminAuth, async (req, res) => {
   try {
     const totalUsers = await User.countDocuments();
-    const vegItems = await Food.countDocuments({ type: "veg" });
-    const nonVegItems = await Food.countDocuments({ type: "nonveg" });
+    const vegItems = await Food.countDocuments({ item_type: "veg" });
+    const nonVegItems = await Food.countDocuments({ item_type: "nonveg" });
     const activeTiffins = await Booking.countDocuments({ status: "active" });
 
     const today = new Date();
