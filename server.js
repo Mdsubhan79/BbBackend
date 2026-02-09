@@ -1,21 +1,3 @@
-
-function deleteNonVeg(id) {
-  if (!confirm("Delete this item?")) return;
-
-  fetch(`${API_BASE}/api/food/${id}`, {
-    method: "DELETE",
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem("adminToken")
-    }
-  })
-    .then(res => res.json())
-    .then(data => {
-      if (!data.success) throw new Error("Delete failed");
-      loadNonVegMenu();
-    })
-    .catch(() => alert("Failed to delete non-veg item"));
-}
-
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -26,30 +8,29 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 /* ========= MIDDLEWARE ========= */
-app.use(cors({
-  origin: "*",
-  methods: ["GET", "POST", "PUT", "DELETE"]
-}));
-
 app.use(cors());
 app.use(express.json());
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-
-
 /* ========= ROUTES ========= */
 app.use("/api/auth", require("./routes/authRoutes"));
-app.use("/api/admin", require("./routes/admin"));       // admin dashboard
+app.use("/api/admin", require("./routes/admin")); 
 app.use("/api/food", require("./routes/foodRoutes"));
-app.use("/api/bookings", require("./routes/bookingRoutes"));
+
+/* USER TIFFIN BOOKINGS */
+app.use("/api/tiffin-bookings", require("./routes/bookingRoutes"));
+
+/* ADMIN TIFFIN BOOKINGS */
+app.use(
+  "/api/admin/tiffin-bookings",
+  require("./routes/adminTiffinBookingRoutes")
+);
+
 app.use("/api/orders", require("./routes/orderRoutes"));
 app.use("/api/notifications", require("./routes/notificationRoutes"));
+app.use("/api/admin/orders", require("./routes/adminOrderRoutes"));
+app.use("/api/admin", require("./routes/adminMenuRoutes"));
 
-const adminOrderRoutes = require("./routes/adminOrderRoutes");
-app.use("/api/admin/Orders", adminOrderRoutes);
-
-const adminMenuRoutes = require("./routes/adminMenuRoutes");
-app.use("/api/admin", adminMenuRoutes);
 
 /* ========= DATABASE ========= */
 mongoose.connect(process.env.MONGO_URI)
