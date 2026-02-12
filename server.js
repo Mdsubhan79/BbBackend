@@ -16,8 +16,10 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/admin", require("./routes/admin")); 
 app.use("/api/food", require("./routes/foodRoutes"));
+app.use("/api/tiffins", require("./routes/tiffinRoutes"));
 
-/* USER TIFFIN BOOKINGS */
+
+
 app.use("/api/tiffin-bookings", require("./routes/bookingRoutes"));
 
 /* ADMIN TIFFIN BOOKINGS */
@@ -30,6 +32,8 @@ app.use("/api/orders", require("./routes/orderRoutes"));
 app.use("/api/notifications", require("./routes/notificationRoutes"));
 app.use("/api/admin/orders", require("./routes/adminOrderRoutes"));
 app.use("/api/admin", require("./routes/adminMenuRoutes"));
+app.use("/api/admin", require("./routes/adminTiffinRoutes"));
+
 
 
 /* ========= DATABASE ========= */
