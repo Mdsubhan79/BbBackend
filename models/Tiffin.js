@@ -12,7 +12,6 @@ const tiffinSchema = new mongoose.Schema({
   },
   mealTime: {
     type: [String],   
-    enum: ["breakfast", "lunch", "dinner"],
     required: true
   },
   description: {
