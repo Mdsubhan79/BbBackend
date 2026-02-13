@@ -11,21 +11,23 @@ const tiffinSchema = new mongoose.Schema(
       enum: ["veg", "nonveg"],
       required: true
     },
+
+    mealTime: {   // ✅ NEW FIELD
+      type: String,
+      enum: ["breakfast", "lunch", "dinner"],
+      required: true
+    },
+
+    description: {   // ✅ NEW FIELD
+      type: String,
+      required: true
+    },
+
     price: {
       type: Number,
       required: true
     },
-    meals: {
-      type: [String],
-      required: true
-    },
-    mealType: {
-      type: [String],
-      enum: ["breakfast", "lunch", "dinner"]
-    },
-    description: {
-      type: String
-    },
+
     active: {
       type: Boolean,
       default: true
