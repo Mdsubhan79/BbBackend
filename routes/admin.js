@@ -57,38 +57,6 @@ router.delete("/menu/:id", adminAuth, async (req, res) => {
   res.json({ message: "Item deleted" });
 });
 
-/* ================= TIFFIN MANAGEMENT ================= */
-router.get("/tiffins", adminAuth, async (req, res) => {
-  const tiffins = await Tiffin.find();
-  res.json(tiffins);
-});
-
-router.post("/tiffins", adminAuth, async (req, res) => {
-  const { planName, type, price, meals, active } = req.body;
-  const tiffin = new Tiffin({ planName, type, price, meals, active });
-  await tiffin.save();
-  res.json(tiffin);
-});
-
-router.put("/tiffins/:id", adminAuth, async (req, res) => {
-  try {
-    const { type, price, meals, active } = req.body;
-    const updated = await Tiffin.findByIdAndUpdate(
-      req.params.id,
-      { type, price, meals, active },
-      { new: true }
-    );
-    res.json(updated);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Update failed" });
-  }
-});
-
-router.delete("/tiffins/:id", adminAuth, async (req, res) => {
-  await Tiffin.findByIdAndDelete(req.params.id);
-  res.json({ message: "Tiffin deleted" });
-});
 
 /* ================= USERS LIST ================= */
 router.get("/users", adminAuth, async (req, res) => {
@@ -139,3 +107,24 @@ router.post("/login", async (req, res) => {
 });
 
 module.exports = router;
+
+router.post("/tiffins", adminAuth, async (req, res) => {
+  try {
+    const { planName, type, mealTime, description, price, active } = req.body;
+
+    const tiffin = new Tiffin({
+      planName,
+      type,
+      mealTime,
+      description,
+      price,
+      active
+    });
+
+    await tiffin.save();
+    res.json({ success: true, tiffin });
+
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});

@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const Tiffin = require("../models/Tiffin");
+const adminAuth = require("../middleware/adminAuth");
 
 /* ================= GET ALL TIFFIN PLANS ================= */
-router.get("/tiffins", async (req, res) => {
+router.get("/tiffins", adminAuth, async (req, res) => {
   try {
     const plans = await Tiffin.find().sort({ createdAt: -1 });
     res.json(plans);
@@ -13,7 +14,7 @@ router.get("/tiffins", async (req, res) => {
 });
 
 /* ================= ADD TIFFIN PLAN ================= */
-router.post("/tiffins", async (req, res) => {
+router.post("/tiffins", adminAuth, async (req, res) => {
   try {
     const plan = new Tiffin(req.body);
     await plan.save();
@@ -24,7 +25,7 @@ router.post("/tiffins", async (req, res) => {
 });
 
 /* ================= DELETE TIFFIN PLAN ================= */
-router.delete("/tiffins/:id", async (req, res) => {
+router.delete("/tiffins/:id", adminAuth, async (req, res) => {
   try {
     await Tiffin.findByIdAndDelete(req.params.id);
     res.json({ success: true });
@@ -34,7 +35,7 @@ router.delete("/tiffins/:id", async (req, res) => {
 });
 
 /* ================= UPDATE TIFFIN PLAN ================= */
-router.put("/tiffins/:id", async (req, res) => {
+router.put("/tiffins/:id", adminAuth, async (req, res) => {
   try {
     const updated = await Tiffin.findByIdAndUpdate(
       req.params.id,
@@ -48,3 +49,23 @@ router.put("/tiffins/:id", async (req, res) => {
 });
 
 module.exports = router;
+router.post("/tiffins", adminAuth, async (req, res) => {
+  try {
+    const { planName, type, mealTime, description, price, active } = req.body;
+
+    const tiffin = new Tiffin({
+      planName,
+      type,
+      mealTime,
+      description,
+      price,
+      active
+    });
+
+    await tiffin.save();
+    res.json({ success: true, tiffin });
+
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
