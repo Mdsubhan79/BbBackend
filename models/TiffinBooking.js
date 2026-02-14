@@ -1,55 +1,42 @@
 const mongoose = require("mongoose");
 
 const tiffinBookingSchema = new mongoose.Schema(
-  {
-    userName: {
-      type: String,
-      required: true
-    },
-    phone: {
-      type: String,
-      required: true
-    },
-    address: {
-      type: String,
-      required: true
-    },
-    startDate: {
-      type: Date,
-      required: true
-    },
+{
+  userName: { type: String, required: true },
+  fatherName: { type: String },
+  profession: { type: String },
+  email: { type: String },
+  phone: { type: String, required: true },
+  city: { type: String },
+  state: { type: String },
+  address: { type: String, required: true },
+  startDate: { type: Date, required: true },
 
-    planId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Tiffin",
-      required: true
-    },
-    planName: {
-      type: String,
-      required: true
-    },
-    planType: {
-      type: String,
-      enum: ["veg", "nonveg"],
-      required: true
-    },
-    price: {
-      type: Number,
-      required: true
-    },
-
-    status: {
-      type: String,
-      enum: ["pending", "active", "inactive"],
-      default: "pending"
-    },
-    paymentStatus: {
-      type: String,
-      enum: ["unpaid", "paid"],
-      default: "unpaid"
-    }
+  planId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Tiffin",
+    required: true
   },
-  { timestamps: true }
+  planName: { type: String, required: true },
+  planType: {
+    type: String,
+    enum: ["veg", "nonveg"],
+    required: true
+  },
+  price: { type: Number, required: true },
+
+  status: {
+    type: String,
+    enum: ["pending", "active", "inactive"],
+    default: "pending"
+  },
+  paymentStatus: {
+    type: String,
+    enum: ["unpaid", "paid"],
+    default: "unpaid"
+  }
+},
+{ timestamps: true }
 );
 
 module.exports = mongoose.model("TiffinBooking", tiffinBookingSchema);
