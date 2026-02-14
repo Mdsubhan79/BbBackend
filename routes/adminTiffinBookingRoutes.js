@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const TiffinBooking = require("../models/TiffinBooking");
+const adminAuth = require("../middleware/adminAuth");
 
 /* GET ALL TIFFIN BOOKINGS (ADMIN) */
 router.get("/", async (req, res) => {
