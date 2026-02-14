@@ -10,7 +10,7 @@ const tiffinBookingSchema = new mongoose.Schema(
   city: { type: String },
   state: { type: String },
   address: { type: String, required: true },
-  startDate: { type: Date, required: true },
+  startDate: { type: Date, },
 
   planId: {
     type: mongoose.Schema.Types.ObjectId,
