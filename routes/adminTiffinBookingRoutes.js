@@ -26,4 +26,12 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+router.delete("/tiffin-bookings/:id", adminAuth, async (req, res) => {
+  try {
+    await TiffinBooking.findByIdAndDelete(req.params.id);
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
 module.exports = router;
