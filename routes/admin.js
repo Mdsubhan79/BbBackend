@@ -108,23 +108,3 @@ router.post("/login", async (req, res) => {
 
 module.exports = router;
 
-router.post("/tiffins", adminAuth, async (req, res) => {
-  try {
-    const { planName, type, mealTime, description, price, active } = req.body;
-
-    const tiffin = new Tiffin({
-      planName,
-      type,
-      mealTime,
-      description,
-      price,
-      active
-    });
-
-    await tiffin.save();
-    res.json({ success: true, tiffin });
-
-  } catch (err) {
-    res.status(500).json({ success: false, message: err.message });
-  }
-});
