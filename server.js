@@ -28,6 +28,8 @@ app.use(
   require("./routes/adminTiffinBookingRoutes")
 );
 
+app.use( "/api/tiffin-menus", require("./routes/tiffinMenuRoutes"));
+
 app.use("/api/orders", require("./routes/orderRoutes"));
 app.use("/api/notifications", require("./routes/notificationRoutes"));
 app.use("/api/admin/orders", require("./routes/adminOrderRoutes"));
