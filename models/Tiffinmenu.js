@@ -15,7 +15,8 @@ const daySchema = new mongoose.Schema({
 const tiffinMenuSchema = new mongoose.Schema({
   bookingId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "TiffinBooking"
+    ref: "TiffinBooking",
+    required: true
   },
   days: [daySchema]
 }, { timestamps: true });
