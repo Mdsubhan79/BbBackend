@@ -3,8 +3,8 @@ const router = express.Router();
 const TiffinBooking = require("../models/TiffinBooking");
 const adminAuth = require("../middleware/adminAuth");
 
-/* GET ALL TIFFIN BOOKINGS (ADMIN) */
-router.get("/", async (req, res) => {
+/* ================= GET ALL BOOKINGS ================= */
+router.get("/", adminAuth, async (req, res) => {
   try {
     const bookings = await TiffinBooking.find().sort({ createdAt: -1 });
     res.json(bookings);
@@ -13,8 +13,8 @@ router.get("/", async (req, res) => {
   }
 });
 
-/* ACTIVATE / UPDATE BOOKING */
-router.put("/:id", async (req, res) => {
+/* ================= UPDATE BOOKING ================= */
+router.put("/:id", adminAuth, async (req, res) => {
   try {
     const updated = await TiffinBooking.findByIdAndUpdate(
       req.params.id,
@@ -27,7 +27,8 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-router.delete("/tiffin-bookings/:id", adminAuth, async (req, res) => {
+/* ================= DELETE BOOKING ================= */
+router.delete("/:id", adminAuth, async (req, res) => {
   try {
     await TiffinBooking.findByIdAndDelete(req.params.id);
     res.json({ success: true });
@@ -35,4 +36,5 @@ router.delete("/tiffin-bookings/:id", adminAuth, async (req, res) => {
     res.status(500).json({ success: false, message: err.message });
   }
 });
+
 module.exports = router;
