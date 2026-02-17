@@ -24,8 +24,8 @@ app.use("/api/tiffin-bookings", require("./routes/bookingRoutes"));
 
 app.use("/api/admin/tiffin-bookings",require("./routes/adminTiffinBookingRoutes"));
 app.use("/api/admin/default-menu", require("./routes/adminDefaultMenuRoutes"));
-
 app.use( "/api/tiffin-menus", require("./routes/tiffinMenuRoutes"));
+app.use("/api/default-menu", require("./routes/defaultMenuPublicRoutes"));
 
 app.use("/api/orders", require("./routes/orderRoutes"));
 app.use("/api/notifications", require("./routes/notificationRoutes"));
