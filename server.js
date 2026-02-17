@@ -22,11 +22,8 @@ app.use("/api/tiffins", require("./routes/tiffinRoutes"));
 
 app.use("/api/tiffin-bookings", require("./routes/bookingRoutes"));
 
-/* ADMIN TIFFIN BOOKINGS */
-app.use(
-  "/api/admin/tiffin-bookings",
-  require("./routes/adminTiffinBookingRoutes")
-);
+app.use("/api/admin/tiffin-bookings",require("./routes/adminTiffinBookingRoutes"));
+app.use("/api/admin/default-menu", require("./routes/adminDefaultMenuRoutes"));
 
 app.use( "/api/tiffin-menus", require("./routes/tiffinMenuRoutes"));
 
