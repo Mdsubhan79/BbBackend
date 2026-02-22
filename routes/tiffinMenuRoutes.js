@@ -1,4 +1,5 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const router = express.Router();
 const TiffinMenu = require("../models/TiffinMenu");
 
@@ -13,10 +14,23 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/:bookingId", async (req, res) => {
-  const menu = await TiffinMenu.findOne({
-    bookingId: req.params.bookingId
-  });
-  res.json(menu);
+
+  try {
+
+    const menu = await TiffinMenu.findOne({
+      bookingId: new mongoose.Types.ObjectId(req.params.bookingId)
+    });
+
+    if (!menu) {
+      return res.status(404).json({ message: "Menu not found" });
+    }
+
+    res.json(menu);
+
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+
 });
 
 module.exports = router;
