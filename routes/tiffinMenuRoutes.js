@@ -13,9 +13,13 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/:bookingId", async (req, res) => {
 
+router.get("/:bookingId", async (req, res) => {
   try {
+
+    if (!mongoose.Types.ObjectId.isValid(req.params.bookingId)) {
+      return res.status(400).json({ message: "Invalid bookingId" });
+    }
 
     const menu = await TiffinMenu.findOne({
       bookingId: new mongoose.Types.ObjectId(req.params.bookingId)
@@ -30,7 +34,4 @@ router.get("/:bookingId", async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
-
 });
-
-module.exports = router;
