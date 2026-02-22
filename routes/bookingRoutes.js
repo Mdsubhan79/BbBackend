@@ -43,3 +43,21 @@ router.put("/:id", async (req, res) => {
 });
 
 module.exports = router;
+
+
+router.get("/:id", async (req, res) => {
+
+  try {
+    const booking = await TiffinBooking.findById(req.params.id);
+
+    if (!booking) {
+      return res.status(404).json({ message: "Booking not found" });
+    }
+
+    res.json(booking);
+
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+
+});
