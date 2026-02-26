@@ -1,24 +1,20 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const router = express.Router();
+const mongoose = require("mongoose");
 const TiffinMenu = require("../models/TiffinMenu");
 
-router.post("/", async (req, res) => {
-  try {
-    const menu = new TiffinMenu(req.body);
-    await menu.save();
-    res.json({ success: true });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
-
 router.get("/:bookingId", async (req, res) => {
-
   try {
+
+    const { bookingId } = req.params;
+
+  
+    if (!mongoose.Types.ObjectId.isValid(bookingId)) {
+      return res.status(400).json({ message: "Invalid bookingId" });
+    }
 
     const menu = await TiffinMenu.findOne({
-      bookingId: new mongoose.Types.ObjectId(req.params.bookingId)
+      bookingId: bookingId  
     });
 
     if (!menu) {
@@ -28,9 +24,9 @@ router.get("/:bookingId", async (req, res) => {
     res.json(menu);
 
   } catch (err) {
+    console.error("Tiffin menu error:", err);
     res.status(500).json({ message: err.message });
   }
-
 });
 
 module.exports = router;

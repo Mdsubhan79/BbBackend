@@ -18,7 +18,7 @@ router.post("/add", upload.single("image"), async (req, res) => {
       item_type,
       category,
       description,
-      image: req.file ? `/uploads/${req.file.filename}` : ""
+      image: req.file ? `/uploads/${req.file.path}` : ""
     });
 
     await food.save();
