@@ -3,7 +3,7 @@ const router = express.Router();
 const Order = require("../models/Order");
 const adminAuth = require("../middleware/adminAuth");
 
-// GET ALL ORDERS (ADMIN)
+// GET ORDERS (ADMIN)
 router.get("/", adminAuth, async (req, res) => {
   try {
     const orders = await Order.find()
