@@ -1,52 +1,53 @@
 const express = require("express");
 const router = express.Router();
+const multer = require("multer");
 const Food = require("../models/FoodItem");
 const upload = require("../middleware/upload");
 
 /* ========= ADD FOOD WITH IMAGE ========= */
-router.post("/add", upload.single("image"), async (req, res) => {
-  try {
-    const { name, price, item_type, category, description } = req.body;
+router.post("/add", (req, res) => {
 
-  
-    if (!name || !price || !item_type) {
-      return res.status(400).json({ error: "Required fields missing" });
+  upload.single("image")(req, res, async function (err) {
+
+    if (err instanceof multer.MulterError) {
+      if (err.code === "LIMIT_FILE_SIZE") {
+        return res.status(400).json({ error: "Image must be under 1MB" });
+      }
+      return res.status(400).json({ error: err.message });
     }
 
-
-    if (!req.file) {
-      return res.status(400).json({ error: "Image is required" });
+    if (err) {
+      return res.status(400).json({ error: err.message });
     }
 
-    const food = new Food({
-      name,
-      price,
-      item_type,
-      category,
-      description,
-      image: req.file.path  
-    });
+    try {
+      const { name, price, item_type, category, description } = req.body;
 
-    await food.save();
+      if (!name || !price || !item_type) {
+        return res.status(400).json({ error: "Required fields missing" });
+      }
 
-    res.status(201).json({
-      success: true,
-      message: "Food item added successfully",
-      food
-    });
+      const food = new Food({
+        name,
+        price,
+        item_type,
+        category,
+        description,
+        image: req.file ? req.file.path : ""
+      });
 
-  } catch (err) {
-  console.error("ADD FOOD ERROR:", err);
+      await food.save();
 
-  if (err.code === "LIMIT_FILE_SIZE") {
-    return res.status(400).json({ error: "Image must be under 3MB" });
-  }
+      res.json({ success: true, food });
 
-  res.status(500).json({ error: err.message });
-}
+    } catch (error) {
+      console.error("ADD FOOD ERROR:", error);
+      res.status(500).json({ error: "Server error" });
+    }
+
+  });
+
 });
-
-
 /* ========= GET FOOD ========= */
 router.get("/", async (req, res) => {
   try {
