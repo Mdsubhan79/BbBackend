@@ -36,9 +36,14 @@ router.post("/add", upload.single("image"), async (req, res) => {
     });
 
   } catch (err) {
-    console.error("ADD FOOD ERROR:", err);
-    res.status(500).json({ error: err.message });
+  console.error("ADD FOOD ERROR:", err);
+
+  if (err.code === "LIMIT_FILE_SIZE") {
+    return res.status(400).json({ error: "Image must be under 3MB" });
   }
+
+  res.status(500).json({ error: err.message });
+}
 });
 
 
