@@ -1,10 +1,14 @@
 const express = require("express");
+const http = require("http");
+const WebSocket = require("ws");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const path = require("path");
 require("dotenv").config();
 
 const app = express();
+const server = http.createServer(app);
+const wss = new WebSocket.Server({ server });
 const PORT = process.env.PORT || 5000;
 
 /* ========= MIDDLEWARE ========= */
@@ -25,7 +29,7 @@ app.use("/api/admin/default-menu", require("./routes/adminDefaultMenuRoutes"));
 app.use( "/api/tiffin-menus", require("./routes/tiffinMenuRoutes"));
 app.use("/api/default-menu", require("./routes/defaultMenuPublicRoutes"));
 
-app.use("/api/orders", require("./routes/orderRoutes"));
+app.use("/api/Orders", require("./routes/orderRoutes"));
 app.use("/api/notifications", require("./routes/notificationRoutes"));
 app.use("/api/admin/orders", require("./routes/adminOrderRoutes"));
 app.use("/api/admin", require("./routes/adminMenuRoutes"));
