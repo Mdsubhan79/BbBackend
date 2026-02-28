@@ -1,12 +1,16 @@
 const mongoose = require('mongoose');
 
 const orderSchema = new mongoose.Schema({
-    userId: { type: String, default: 'guest' },
+    userId: { 
+        type: String, 
+        default: 'guest_' + Date.now() 
+    },
     items: [{
         name: String,
         price: Number,
         quantity: Number,
         category: String,
+        image: String,
         customizations: String
     }],
     customerDetails: {
