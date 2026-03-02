@@ -60,10 +60,18 @@ router.post('/cancel/:orderId', async (req, res) => {
             return res.status(404).json({ error: 'Order not found' });
         }
 
-        if (new Date() < new Date(order.cancellationDeadline)) {
+        // Check if within cancellation window (5 minutes)
+        const now = new Date();
+        const orderTime = new Date(order.orderTime || order.createdAt);
+        const timeDiff = (now - orderTime) / (1000 * 60); // in minutes
+        
+        console.log(`Cancel attempt - Order time: ${orderTime}, Now: ${now}, Diff: ${timeDiff} minutes`);
+
+        if (timeDiff <= 5) {
             order.orderStatus = 'cancelled';
             await order.save();
 
+            // Broadcast cancellation
             if (global.broadcastUpdate) {
                 global.broadcastUpdate({
                     type: 'ORDER_CANCELLED',
@@ -71,13 +79,18 @@ router.post('/cancel/:orderId', async (req, res) => {
                 });
             }
 
-            res.json({ message: 'Order cancelled successfully' });
+            res.json({ 
+                success: true, 
+                message: 'Order cancelled successfully' 
+            });
         } else {
-            res.status(400).json({ error: 'Cancellation time expired (5 minutes limit)' });
+            res.status(400).json({ 
+                error: 'Cancellation time expired. Orders can only be cancelled within 5 minutes of placing.' 
+            });
         }
     } catch (error) {
+        console.error('Error cancelling order:', error);
         res.status(500).json({ error: error.message });
     }
 });
-
 module.exports = router;
