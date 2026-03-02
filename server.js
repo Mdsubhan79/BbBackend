@@ -41,21 +41,24 @@ app.use(cors());
 app.use(express.json());
 
 /* ========= ROUTES ========= */
+// SPECIFIC admin routes FIRST
+app.use("/api/admin/orders", adminOrderRoutes);
+app.use("/api/admin/tiffin-bookings", require("./routes/adminTiffinBookingRoutes"));
+app.use("/api/admin/default-menu", require("./routes/adminDefaultMenuRoutes"));
+app.use("/api/admin", require("./routes/adminMenuRoutes"));
+app.use("/api/admin", require("./routes/adminTiffinRoutes"));
+
+// GENERAL admin route LAST
+app.use("/api/admin", require("./routes/admin"));
+
+// Other routes
 app.use("/api/auth", require("./routes/authRoutes"));
-app.use("/api/admin", require("./routes/admin")); 
 app.use("/api/food", require("./routes/foodRoutes"));
 app.use("/api/tiffins", require("./routes/tiffinRoutes"));
 app.use("/api/tiffin-bookings", require("./routes/bookingRoutes"));
-app.use("/api/admin/tiffin-bookings",require("./routes/adminTiffinBookingRoutes"));
-app.use("/api/admin/default-menu", require("./routes/adminDefaultMenuRoutes"));
-app.use("/api/tiffin-menus", require("./routes/tiffinMenuRoutes"));
-app.use("/api/default-menu", require("./routes/defaultMenuPublicRoutes"));
 app.use("/api/orders", orderRoutes);
-app.use("/api/notifications", require("./routes/notificationRoutes"));
-app.use("/api/admin/orders", adminOrderRoutes);
-app.use("/api/admin", require("./routes/adminMenuRoutes"));
-app.use("/api/admin", require("./routes/adminTiffinRoutes"));
 app.use("/api/orders", require("./routes/orderPublicRoutes"));
+app.use("/api/notifications", require("./routes/notificationRoutes"));
 
 /* ========= DATABASE ========= */
 mongoose.connect(process.env.MONGO_URI)
