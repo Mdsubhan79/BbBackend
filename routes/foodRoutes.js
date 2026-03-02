@@ -3,6 +3,7 @@ const router = express.Router();
 const multer = require("multer");
 const Food = require("../models/FoodItem");
 const upload = require("../middleware/upload");
+const cloudinary = require("../config/cloudinary");
 
 /* ========= ADD FOOD WITH IMAGE ========= */
 router.post("/add", (req, res) => {
@@ -21,10 +22,18 @@ router.post("/add", (req, res) => {
     }
 
     try {
+
       const { name, price, item_type, category, description } = req.body;
 
       if (!name || !price || !item_type) {
         return res.status(400).json({ error: "Required fields missing" });
+      }
+
+      let imageUrl = "";
+
+      if (req.file) {
+        const result = await cloudinary.uploader.upload(req.file.path);
+        imageUrl = result.secure_url;
       }
 
       const food = new Food({
@@ -33,7 +42,7 @@ router.post("/add", (req, res) => {
         item_type,
         category,
         description,
-        image: req.file ? req.file.path : ""
+        image: imageUrl
       });
 
       await food.save();
