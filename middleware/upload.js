@@ -10,7 +10,7 @@ cloudinary.config({
 });
 
 
-if (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY || !process.env.CLOUDINARY_API_SECRET) {
+if (!process.env.CLOUD_NAME || !process.env.CLOUD_API_KEY || !process.env.CLOUD_API_SECRET) {
     console.warn('⚠️ Cloudinary not configured. Using local storage fallback.');
     
    
