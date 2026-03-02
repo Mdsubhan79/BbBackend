@@ -54,7 +54,6 @@ app.use("/api/notifications", require("./routes/notificationRoutes"));
 app.use("/api/admin/orders", adminOrderRoutes);
 app.use("/api/admin", require("./routes/adminMenuRoutes"));
 app.use("/api/admin", require("./routes/adminTiffinRoutes"));
-app.use("/api/admin", require("./routes/adminAuthRoutes"));
 
 /* ========= DATABASE ========= */
 mongoose.connect(process.env.MONGO_URI)
