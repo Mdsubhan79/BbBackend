@@ -7,7 +7,7 @@ const path = require("path");
 require("dotenv").config();
 const orderRoutes = require("./routes/orderRoutes");
 const adminOrderRoutes = require("./routes/adminOrderRoutes");
-const order = require('../models/Order');
+const Order = require('./models/Order');
 
 const app = express();
 const server = http.createServer(app);
