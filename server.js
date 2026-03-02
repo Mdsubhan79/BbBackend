@@ -5,6 +5,8 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const path = require("path");
 require("dotenv").config();
+const orderRoutes = require("./routes/orderRoutes");
+const adminOrderRoutes = require("./routes/adminOrderRoutes");
 
 const app = express();
 const server = http.createServer(app);
@@ -47,11 +49,12 @@ app.use("/api/admin/tiffin-bookings",require("./routes/adminTiffinBookingRoutes"
 app.use("/api/admin/default-menu", require("./routes/adminDefaultMenuRoutes"));
 app.use("/api/tiffin-menus", require("./routes/tiffinMenuRoutes"));
 app.use("/api/default-menu", require("./routes/defaultMenuPublicRoutes"));
-app.use("/api/orders", require("./routes/orderRoutes")); 
+app.use("/api/orders", orderRoutes);
 app.use("/api/notifications", require("./routes/notificationRoutes"));
-app.use("/api/admin/orders", require("./routes/adminOrderRoutes"));
+app.use("/api/admin/orders", adminOrderRoutes);
 app.use("/api/admin", require("./routes/adminMenuRoutes"));
 app.use("/api/admin", require("./routes/adminTiffinRoutes"));
+app.use("/api/admin", require("./routes/adminAuthRoutes"));
 
 /* ========= DATABASE ========= */
 mongoose.connect(process.env.MONGO_URI)

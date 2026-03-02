@@ -102,8 +102,7 @@ router.put('/:orderId', async (req, res) => {
 router.get('/stats', async (req, res) => {
     try {
         const today = new Date();
-        today.setHours(0, 0, 0, 0);
-
+        today.setHours(0, 0, 0, 0); 
         const stats = {
             today: await Order.countDocuments({ orderTime: { $gte: today } }),
             pending: await Order.countDocuments({ orderStatus: 'pending' }),
