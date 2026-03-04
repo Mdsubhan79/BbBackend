@@ -59,6 +59,7 @@ app.use("/api/tiffin-bookings", require("./routes/bookingRoutes"));
 app.use("/api/orders", orderRoutes);
 app.use("/api/orders", require("./routes/orderPublicRoutes"));
 app.use("/api/notifications", require("./routes/notificationRoutes"));
+app.use("/api/orders", require("./routes/feedbackRoutes"));
 
 /* ========= DATABASE ========= */
 mongoose.connect(process.env.MONGO_URI)
