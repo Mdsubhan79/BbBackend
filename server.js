@@ -49,7 +49,7 @@ app.use("/api/admin/default-menu", require("./routes/adminDefaultMenuRoutes"));
 app.use("/api/admin", require("./routes/adminMenuRoutes"));
 app.use("/api/admin", require("./routes/adminTiffinRoutes"));
 app.use("/api", defaultMenuPublicRoutes);
-// GENERAL admin route LAST
+
 app.use("/api/admin", require("./routes/admin"));
 
 // Other routes
