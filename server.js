@@ -43,6 +43,7 @@ app.use(express.json());
 
 /* ========= ROUTES ========= */
 // SPECIFIC admin routes FIRST
+app.use("/api/tiffin-menus", require("./routes/tiffinMenuRoutes"));
 app.use("/api/admin/orders", adminOrderRoutes);
 app.use("/api/admin/tiffin-bookings", require("./routes/adminTiffinBookingRoutes"));
 app.use("/api/admin/default-menu", require("./routes/adminDefaultMenuRoutes"));
