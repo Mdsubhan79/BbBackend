@@ -8,6 +8,7 @@ require("dotenv").config();
 const orderRoutes = require("./routes/orderRoutes");
 const adminOrderRoutes = require("./routes/adminOrderRoutes");
 const Order = require('./models/Order');
+const defaultMenuPublicRoutes = require("./routes/defaultMenuPublicRoutes");
 
 const app = express();
 const server = http.createServer(app);
@@ -47,7 +48,7 @@ app.use("/api/admin/tiffin-bookings", require("./routes/adminTiffinBookingRoutes
 app.use("/api/admin/default-menu", require("./routes/adminDefaultMenuRoutes"));
 app.use("/api/admin", require("./routes/adminMenuRoutes"));
 app.use("/api/admin", require("./routes/adminTiffinRoutes"));
-
+app.use("/api", defaultMenuPublicRoutes);
 // GENERAL admin route LAST
 app.use("/api/admin", require("./routes/admin"));
 

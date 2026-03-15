@@ -1,14 +1,21 @@
 const express = require("express");
 const router = express.Router();
-const DefaultMenu = require("../models/DefaultTiffinMenu");
+const DefaultTiffinMenu = require("../models/DefaultTiffinMenu");
 
-/* PUBLIC GET DEFAULT MENU */
-router.get("/", async (req, res) => {
+router.get("/default-menu", async (req, res) => {
   try {
-    const menu = await DefaultMenu.findOne();
+
+    const menu = await DefaultTiffinMenu.findOne();
+
+    if (!menu) {
+      return res.status(404).json({ message: "No menu set yet" });
+    }
+
     res.json(menu);
+
   } catch (err) {
-    res.status(500).json({ message: "Server error" });
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
   }
 });
 
