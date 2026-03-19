@@ -37,12 +37,11 @@ global.broadcastUpdate = (data) => {
     });
 };
 
-/* ========= MIDDLEWARE ========= */
+/* ========= MIDDLEWARE */
 app.use(cors());
 app.use(express.json());
 
-/* ========= ROUTES ========= */
-// SPECIFIC admin routes FIRST
+/* ========= ROUTES */
 app.use("/api/tiffin-menus", require("./routes/tiffinMenuRoutes"));
 app.use("/api/admin/orders", adminOrderRoutes);
 app.use("/api/admin/tiffin-bookings", require("./routes/adminTiffinBookingRoutes"));
