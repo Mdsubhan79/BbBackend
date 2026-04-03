@@ -3,7 +3,7 @@ const router = express.Router();
 const Food = require("../models/FoodItem");
 const adminAuth = require("../middleware/adminAuth");
 
-// GET VEG ITEMS
+// VEG ITEMS
 router.get("/menu", adminAuth, async (req, res) => {
   const { type } = req.query;
   const items = await Food.find({ type });
