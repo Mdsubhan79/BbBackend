@@ -77,6 +77,7 @@ router.put('/:orderId', async (req, res) => {
             orderId: req.params.orderId,
             reason: adminNotes || 'Order deleted by admin'
         });
+        console.log("DELETE HIT:", req.params.orderId);
     }
 
     return res.json({
