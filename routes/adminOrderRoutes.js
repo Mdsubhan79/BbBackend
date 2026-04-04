@@ -68,18 +68,23 @@ router.put('/:orderId', async (req, res) => {
         const { status, paymentStatus, deliveryEstimate, adminNotes, action } = req.body;
 
         if (action === 'delete') {
-            order.orderStatus = 'cancelled';
-            order.adminNotes = adminNotes || 'Order cancelled by admin';
-            await order.save();
 
-            if (global.broadcastUpdate) {
-                global.broadcastUpdate({
-                    type: 'ORDER_DELETED',
-                    orderId: order._id,
-                    reason: adminNotes
-                });
-            }
-        } else {
+    await Order.findByIdAndDelete(req.params.orderId);
+
+    if (global.broadcastUpdate) {
+        global.broadcastUpdate({
+            type: 'ORDER_DELETED',
+            orderId: req.params.orderId,
+            reason: adminNotes || 'Order deleted by admin'
+        });
+    }
+
+    return res.json({
+        success: true,
+        message: "Order deleted permanently"
+    });
+}
+         else {
       
             if (status) {
                 order.orderStatus = status;
@@ -143,47 +148,6 @@ router.get('/stats', async (req, res) => {
         res.json(stats);
     } catch (error) {
         console.error('Error getting stats:', error);
-        res.status(500).json({ error: error.message });
-    }
-});
-
-// Update order status or soft delete
-router.put('/:orderId', async (req, res) => {
-    try {
-        const order = await Order.findById(req.params.orderId);
-        
-        if (!order) {
-            return res.status(404).json({ error: 'Order not found' });
-        }
-
-        const { status, paymentStatus, deliveryEstimate, adminNotes, action } = req.body;
-
-        // Handle soft delete
-        if (action === 'delete') {
-            order.orderStatus = 'cancelled';
-            order.adminNotes = adminNotes || 'Order cancelled by admin';
-            await order.save();
-
-            if (global.broadcastUpdate) {
-                global.broadcastUpdate({
-                    type: 'ORDER_DELETED',
-                    orderId: order._id,
-                    reason: adminNotes
-                });
-            }
-
-            return res.json({ 
-                success: true, 
-                message: 'Order cancelled successfully',
-                order 
-            });
-        }
-        
-        // Rest of your update logic...
-        // [Keep your existing update code here]
-        
-    } catch (error) {
-        console.error('Error updating order:', error);
         res.status(500).json({ error: error.message });
     }
 });
