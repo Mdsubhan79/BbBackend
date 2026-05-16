@@ -56,7 +56,7 @@ const cateringServiceSchema = new mongoose.Schema({
         tent: String
     },
 
-    image: {
+    image: { 
         type: String,
         default: ""
     },

@@ -26,7 +26,7 @@ const cateringBookingSchema = new mongoose.Schema({
         price: Number
     },
 
-    date: String,
+    date: String, 
 
     urgentBooking: {
         type: Boolean,
