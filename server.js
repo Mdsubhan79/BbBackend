@@ -9,6 +9,7 @@ const orderRoutes = require("./routes/orderRoutes");
 const adminOrderRoutes = require("./routes/adminOrderRoutes");
 const Order = require('./models/Order');
 const defaultMenuPublicRoutes = require("./routes/defaultMenuPublicRoutes");
+const cateringRoutes = require("./routes/cateringRoutes");
 
 const app = express();
 const server = http.createServer(app);
@@ -49,7 +50,7 @@ app.use("/api/admin/default-menu", require("./routes/adminDefaultMenuRoutes"));
 app.use("/api/admin", require("./routes/adminMenuRoutes"));
 app.use("/api/admin", require("./routes/adminTiffinRoutes"));
 app.use("/api", defaultMenuPublicRoutes);
-
+app.use("/api/catering", cateringRoutes);
 app.use("/api/admin", require("./routes/admin"));
 
 // Other routes
