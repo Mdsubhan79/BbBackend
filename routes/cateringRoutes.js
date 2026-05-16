@@ -256,5 +256,29 @@ router.put("/admin/update-booking/:id", async (req, res) => {
     }
 
 });
+// At the beginning of cateringRoutes.js, add:
+router.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    if (req.method === 'OPTIONS') return res.sendStatus(200);
+    next();
+});
 
+// Also modify the GET /services endpoint to ensure consistent response:
+router.get("/services", async (req, res) => {
+    try {
+        const services = await CateringService.find({ active: true }).sort({ createdAt: -1 });
+        res.json({
+            success: true,
+            services: services
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message,
+            services: []
+        });
+    }
+});
 module.exports = router;
