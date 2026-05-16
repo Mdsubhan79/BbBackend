@@ -28,8 +28,8 @@ const cateringBookingSchema = new mongoose.Schema({
 
     date: String, 
 
-    urgentBooking: {
-        type: Boolean,
+    urgentBooking: { 
+        type: Boolean, 
         default: false
     },
 
